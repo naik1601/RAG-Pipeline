@@ -1,0 +1,14 @@
+version: 2
+models:
+  - name: fact_orders
+    columns:
+      - name: order_id
+        data_tests: [unique, not_null]
+      - name: customer_id
+        data_tests:
+          - relationships:   # referential integrity
+              arguments: { to: ref('dim_customers'), field: customer_id }
+      - name: order_status
+        data_tests:
+          - accepted_values:
+              arguments: { values: ['Delivered','Cancelled','Refunded'] }
